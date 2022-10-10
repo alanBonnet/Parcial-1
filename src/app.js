@@ -1,0 +1,25 @@
+// importamos las libreria 
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+require('dotenv').config()
+// conexión a la base de datos
+const connectDB = require('./connection');
+connectDB()
+
+//inicializamos express
+const app = express();
+//configuraciones
+const port = process.env.PORT || 4000;
+
+//middlewares
+app.use(cors())
+app.use(morgan('combined'));
+app.use(express.json());
+
+//Rutas
+
+
+// Inicio de servidor
+
+app.listen(port, console.log(`Servidor inicializado en http://localhost:${port}`));
