@@ -1,3 +1,4 @@
+console.clear();
 // importamos las libreria 
 const express = require('express');
 const morgan = require('morgan');
@@ -18,7 +19,7 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 //Rutas
-
+app.use(require('./routes/user.routes'))// rutas del usuario
 
 // Inicio de servidor
 
