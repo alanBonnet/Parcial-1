@@ -26,3 +26,5 @@ npm  run  nodemon
 npm  start
 
 ```
+* ### En caso de querer descargar la API:
+  * [Link Github Para Descargar la App](https://github.com/alanBonnet/Parcial-1/releases)
