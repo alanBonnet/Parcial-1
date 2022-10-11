@@ -20,6 +20,7 @@ app.use(express.json());
 
 //Rutas
 app.use(require('./routes/user.routes'))// rutas del usuario
+app.use(require('./routes/task.routes'))// rutas del tareas
 
 // Inicio de servidor
 
