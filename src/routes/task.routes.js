@@ -1,5 +1,6 @@
 const router = require('express').Router();
-
+const isAdmin = require('../middlewares/is-admin');
+const validateJWT = require('../middlewares/validator-jwt');
 const {
     getTasks,
     getTask_idUser,
@@ -12,10 +13,10 @@ router.get('/task',getTasks);
 
 router.get('/user/task/:idUser',getTask_idUser);
 
-router.post('/task',postTask);
+router.post('/task',[validateJWT],postTask);
 
-router.put('/task/:idTask',putTask);
+router.put('/task/:idTask',[validateJWT],putTask);
 
-router.delete('/task/:idTask',deleteTask);
+router.delete('/task/:idTask',[validateJWT],deleteTask);
 
 module.exports = router;
