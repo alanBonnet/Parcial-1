@@ -1,9 +1,10 @@
-//Importado de dependencias
+//TODO:Importado de dependencias
 const USER = require('../models/USER');
 const bcrypt = require('bcrypt');
-// Inicializado de Controllador.objtect
+//TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
 
+//TODO: Controlador de GetUsers
 CtrlUser.getUsers = async (req, res) => {
     try {
         const USERS = await USER.find({isActive: true});
@@ -18,25 +19,36 @@ CtrlUser.getUsers = async (req, res) => {
     }
 
 }
-
+//TODO: Controlador de GetUser por ID
 CtrlUser.getUserID = async (req, res) => {
     try {
         const idUser = req.params.idUser;
         const user = await USER.findOne({$and:[{"_id":idUser},{isActive:true}]});
-        if(user){
-            return res.json(
+        if(!user){
+            return res.status(404).json(
                 {
-                    message: `Usuario encontrado`,
-                    user
+                    message:"No se encuentra el usuario"
                 }
             )
         }
-        error
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
+        return res.json(
+            {
+                message: `Usuario encontrado`,
+                user
+            }
+        )
     } catch (error) {
-        return res.status(404).json({message: `No se encontró al usuario ${error.message}`})
+        return res.status(500).json({message: `Error interno del Servidor: ${error.message}`})
     }
 }
-
+//TODO: Controlador de PostUser
 CtrlUser.postUser = async (req, res) => {
     try {
         const {username, password,email} = req.body;
@@ -46,7 +58,7 @@ CtrlUser.postUser = async (req, res) => {
             })
         }
         // Encriptando la contraseña de usuario
-        const newPassword = bcrypt.hashSync(password,10);
+        const newPassword = bcrypt.hashSync(password,10);//TODO:Mecanismo de encriptado de la contraseña
 
         const newUser = new USER({
             username,
@@ -63,7 +75,7 @@ CtrlUser.postUser = async (req, res) => {
         })
     }
 }
-
+//TODO: Controlador de PutUser
 CtrlUser.putUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -80,24 +92,30 @@ CtrlUser.putUser = async (req, res) => {
             })
         }
         const User = await USER.findOne({$and:[{_id: idUser}, {isActive: true}]});
-        if(User){
-            const newPassword = bcrypt.hashSync(password,10)
-            await User.updateOne({password:newPassword , email});
-            return res.status(201).json({
-                message: `Usuario modificado correctamente.`
-            })
-        }else{
+        if(!User){
             return res.status(404).json({
                 message: `El usuario no fue encontrado`
             })
         }
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
+        const newPassword = bcrypt.hashSync(password,10)
+        await User.updateOne({password:newPassword , email});
+        return res.status(201).json({
+            message: `Usuario modificado correctamente.`
+        })
     } catch (error) {
         return res.status(500).json({
             message: `Hubo un error con modificar el usuario: ${error.message}`
         })
     }
 }
-
+//TODO: Controlador de DeleteUser
 CtrlUser.deleteUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -107,6 +125,13 @@ CtrlUser.deleteUser = async (req, res) => {
                 message: `El usuario ya no existe`
             })
         }
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
         await user.updateOne({isActive: false})
         return res.status(201).json({
             message: `Usuario eliminado correctamente.`
@@ -115,5 +140,5 @@ CtrlUser.deleteUser = async (req, res) => {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
     }
 }
-
+//TODO: export del Controlador
 module.exports = CtrlUser;
