@@ -34,7 +34,7 @@ CtrlUser.getUserID = async (req, res) => {
         }
         error
     } catch (error) {
-        return res.status(404).json({message: `No se encontró al usuario ${error.message}`})
+        return res.status(404).json({message: `No se encontró al usuario`})
     }
 }
 //TODO: Controlador de PostUser
