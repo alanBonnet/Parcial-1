@@ -1,9 +1,10 @@
-//Importado de dependencias
+//TODO:Importado de dependencias
 const USER = require('../models/USER');
 const bcrypt = require('bcrypt');
-// Inicializado de Controllador.objtect
+//TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
 
+//TODO: Controlador de GetUsers
 CtrlUser.getUsers = async (req, res) => {
     try {
         const USERS = await USER.find({isActive: true});
@@ -18,7 +19,7 @@ CtrlUser.getUsers = async (req, res) => {
     }
 
 }
-
+//TODO: Controlador de GetUser por ID
 CtrlUser.getUserID = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -36,7 +37,7 @@ CtrlUser.getUserID = async (req, res) => {
         return res.status(404).json({message: `No se encontró al usuario ${error.message}`})
     }
 }
-
+//TODO: Controlador de PostUser
 CtrlUser.postUser = async (req, res) => {
     try {
         const {username, password,email} = req.body;
@@ -46,7 +47,7 @@ CtrlUser.postUser = async (req, res) => {
             })
         }
         // Encriptando la contraseña de usuario
-        const newPassword = bcrypt.hashSync(password,10);
+        const newPassword = bcrypt.hashSync(password,10);//TODO:Mecanismo de encriptado de la contraseña
 
         const newUser = new USER({
             username,
@@ -63,7 +64,7 @@ CtrlUser.postUser = async (req, res) => {
         })
     }
 }
-
+//TODO: Controlador de PutUser
 CtrlUser.putUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -97,7 +98,7 @@ CtrlUser.putUser = async (req, res) => {
         })
     }
 }
-
+//TODO: Controlador de DeleteUser
 CtrlUser.deleteUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -115,5 +116,5 @@ CtrlUser.deleteUser = async (req, res) => {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
     }
 }
-
+//TODO: export del Controlador
 module.exports = CtrlUser;

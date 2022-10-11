@@ -1,5 +1,7 @@
+//TODO:Importado de mongoose
 const mongoose = require('mongoose');
 
+//TODO:Fn Async para conectar a la base de datos
 const CONNECTDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI, {

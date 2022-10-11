@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+//TODO: Generador del JWT
 const generateJWT = (USER) => {
     return new Promise((resolve, reject) =>{
         /* Generate a token with idUser and a secret word */
@@ -7,9 +7,9 @@ const generateJWT = (USER) => {
             expiresIn: '5h'
         }, (err, token) => {
             if(err){
-                reject(`No se pudo generar el token: ${err.message}`);
+                reject(`No se pudo generar el token: ${err.message}`);//TODO:Salida del error
             }
-            console.log(`Se creó un token para el usuario de: ${USER['_id']} (${USER['username']}) --> "${token}"`)
+            console.log(`Se creó un token para el usuario de: ${USER['_id']} (${USER['username']}) --> "${token}"`)//TODO:Salida del token por consola
             resolve(token)
         })
         
