@@ -1,5 +1,5 @@
 const {model,Schema}= require('mongoose');
-
+require('../models/USER')
 const TaskModel = new Schema({
     title:{
         type:String,
