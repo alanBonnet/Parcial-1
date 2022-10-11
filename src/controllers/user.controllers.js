@@ -24,17 +24,28 @@ CtrlUser.getUserID = async (req, res) => {
     try {
         const idUser = req.params.idUser;
         const user = await USER.findOne({$and:[{"_id":idUser},{isActive:true}]});
-        if(user){
-            return res.json(
+        if(!user){
+            return res.status(404).json(
                 {
-                    message: `Usuario encontrado`,
-                    user
+                    message:"No se encuentra el usuario"
                 }
             )
         }
-        error
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
+        return res.json(
+            {
+                message: `Usuario encontrado`,
+                user
+            }
+        )
     } catch (error) {
-        return res.status(404).json({message: `No se encontró al usuario`})
+        return res.status(500).json({message: `Error interno del Servidor: ${error.message}`})
     }
 }
 //TODO: Controlador de PostUser
@@ -81,17 +92,23 @@ CtrlUser.putUser = async (req, res) => {
             })
         }
         const User = await USER.findOne({$and:[{_id: idUser}, {isActive: true}]});
-        if(User){
-            const newPassword = bcrypt.hashSync(password,10)
-            await User.updateOne({password:newPassword , email});
-            return res.status(201).json({
-                message: `Usuario modificado correctamente.`
-            })
-        }else{
+        if(!User){
             return res.status(404).json({
                 message: `El usuario no fue encontrado`
             })
         }
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
+        const newPassword = bcrypt.hashSync(password,10)
+        await User.updateOne({password:newPassword , email});
+        return res.status(201).json({
+            message: `Usuario modificado correctamente.`
+        })
     } catch (error) {
         return res.status(500).json({
             message: `Hubo un error con modificar el usuario: ${error.message}`
@@ -107,6 +124,13 @@ CtrlUser.deleteUser = async (req, res) => {
             return res.status(404).json({
                 message: `El usuario ya no existe`
             })
+        }
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
         }
         await user.updateOne({isActive: false})
         return res.status(201).json({
