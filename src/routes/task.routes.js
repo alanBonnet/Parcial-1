@@ -14,7 +14,7 @@ const {
 router.get('/task',getTasks);
 
 //TODO:Ruta getTask por IdUser
-router.get('/user/task/:idUser',getTask_idUser);
+router.get('/task/user/',[validateJWT],getTask_idUser);
 
 //TODO:Ruta postTask
 router.post('/task',[validateJWT],postTask);

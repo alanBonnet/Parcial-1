@@ -22,8 +22,8 @@ CtrlTask.getTasks = async (req, res) => {
 //TODO:Obtenemos las tareas de un usuario
 CtrlTask.getTask_idUser = async (req, res) => {
     try {
-        const idUser = req.params.idUser;
-        const Tasks = await TaskModel.find({idUser})
+        const idUser = req.user._id;
+        const Tasks = await TaskModel.find({$and:[{idUser},{isActive: true}]})
         .populate('idUser',['username', 'email'])
         if(!Tasks.length){
             return res.status(404).json({
@@ -44,7 +44,8 @@ CtrlTask.getTask_idUser = async (req, res) => {
 //TODO:Creamos Tarea
 CtrlTask.postTask = async (req, res) => {
     try {
-        const {idUser,title,description, fecha, estado} = req.body;
+        const idUser = req.user._id
+        const {title,description, fecha, estado} = req.body;
         if(!idUser || !title || !description){
             return res.status(400).json({
                 message:"La información proporcionada no es la adecuada.",
