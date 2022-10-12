@@ -161,6 +161,38 @@ CtrlTask.deleteTask = async (req, res) => {
         })
     }
 }
+//TODO:Elimino una tarea
+
+CtrlTask.deleteTask = async (req, res) => {
+    try {
+        const idTask = req.params.idTask;
+        const userID = req.user._id;
+
+        const Task = await TaskModel.findOne({$and:[{_id:idTask},{isActive:true}]})
+        if(!Task || !Task.isActive){
+            return res.status(404).json({
+                message: 'No existe la tarea'
+            });
+        }//TODO:Verifico si la tarea existe o está activa
+        const userIDString = userID.toString() //recibo el userID que me pasa el validateJWT y lo convierto a STRING
+        const tareaIDString = Task.idUser.toString()//recibo la propiedad idUser de la Task y lo convierto a STRING para luego comparar
+
+        if(!((userIDString === tareaIDString)|| req.user.role === 'user_admin')) {
+            return res.status(401).json({
+                message: 'No está autorizado para eliminar esta tarea.'
+            })
+        }//TODO:Verifico si está autorizado el usuario por role o si es propietario de la tarea
+        await Task.updateOne({isActive:false});
+        return res.status(201).json({
+            message: 'La tarea fue elimada correctamente.',
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Hubo un error con eliminar la tarea.",
+            error: error.message
+        })
+    }
+}
 
 module.exports =CtrlTask;
         

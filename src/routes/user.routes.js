@@ -10,6 +10,7 @@ const {
     postUser,
     putUser,
     deleteUser,
+    deleteUserAllTasks
 } = require('../controllers/user.controllers');
 
 //TODO:Ruta GetUsers
@@ -26,5 +27,8 @@ router.put('/user/:idUser',[validateJWT],putUser);//Modifico un usuario
 
 //TODO:Ruta DeleteUser
 router.delete('/user/:idUser',[validateJWT],deleteUser);//Elimino un usuario
+
+//TODO:Ruta DeleteUserAllTasks
+router.delete('/user/:idUser/task',[validateJWT],deleteUserAllTasks);//Elimino un usuario y todas sus tareas
 
 module.exports = router;

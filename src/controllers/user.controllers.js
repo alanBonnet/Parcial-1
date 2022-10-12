@@ -1,6 +1,8 @@
 //TODO:Importado de dependencias
 const USER = require('../models/USER');
+const TASK = require('../models/TASK');
 const bcrypt = require('bcrypt');
+const { deleteMany } = require('../models/USER');
 //TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
 
@@ -135,6 +137,35 @@ CtrlUser.deleteUser = async (req, res) => {
         await user.updateOne({isActive: false})
         return res.status(201).json({
             message: `Usuario eliminado correctamente.`
+        })
+    } catch (error) {
+        return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
+    }
+}
+//TODO: export del Controlador
+
+CtrlUser.deleteUserAllTasks = async (req, res) => {
+    try {
+        const idUser = req.params.idUser;
+        const user = await USER.findOne({$and:[{_id: idUser},{isActive: true}]});
+        if(!user){
+            return res.status(404).json({
+                message: `El usuario ya no existe`
+            })
+        }
+        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
+            return res.status(401).json(
+                {
+                    message: `No está autorizado para esta petición.`
+                }
+            )
+        }
+        //TODO: Busco y actualizo el estado de las tareas que es propietarios de las tareas
+        await TASK.updateMany({$and:[{isActive: true},{idUser}]}, {isActive: false})
+        //TODO: Busco y actualizo el estado del usuario a eliminar
+        await user.updateOne({isActive: false})
+        return res.status(201).json({
+            message: `Usuario eliminado correctamente.`,
         })
     } catch (error) {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
