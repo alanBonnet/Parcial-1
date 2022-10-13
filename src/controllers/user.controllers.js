@@ -2,7 +2,6 @@
 const USER = require('../models/USER');
 const TASK = require('../models/TASK');
 const bcrypt = require('bcrypt');
-const { deleteMany } = require('../models/USER');
 //TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
 
