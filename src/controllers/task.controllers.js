@@ -128,39 +128,49 @@ CtrlTask.putTask = async (req, res) => {
         })
     }
 };
+//TODO:Modificamos una tarea
 
-//TODO:Elimino una tarea
-
-CtrlTask.deleteTask = async (req, res) => {
+CtrlTask.completeTask = async (req, res) => {
     try {
         const idTask = req.params.idTask;
         const userID = req.user._id;
 
-        const Task = await TaskModel.findOne({$and:[{_id:idTask},{isActive:true}]})
+        if(!idTask){
+            return res.status(400).json({
+                message:"No viene la ID de la tarea"
+            })
+        }
+        const Task = await TaskModel.findById(idTask);
         if(!Task || !Task.isActive){
             return res.status(404).json({
-                message: 'No existe la tarea'
-            });
-        }//TODO:Verifico si la tarea existe o está activa
-        const userIDString = userID.toString() //recibo el userID que me pasa el validateJWT y lo convierto a STRING
-        const tareaIDString = Task.idUser.toString()//recibo la propiedad idUser de la Task y lo convierto a STRING para luego comparar
-
-        if(!((userIDString === tareaIDString)|| req.user.role === 'user_admin')) {
-            return res.status(401).json({
-                message: 'No está autorizado para eliminar esta tarea.'
+                message: 'No se encuentra la tarea',
             })
-        }//TODO:Verifico si está autorizado el usuario por role o si es propietario de la tarea
-        await Task.updateOne({isActive:false});
+        }
+        const userIdString = userID.toString();
+        const tareaIdString = Task.idUser.toString();
+
+        if((!(userIdString === tareaIdString)|| req.user.role === 'user_admin')){
+            return res.status(401).json({
+                message: 'No tiene permisos para modificar la tarea',
+            })
+        }
+        if(Task.estado === 3){
+            return res.status(400).json({
+                message: 'La tarea ya fue completada con anterioridad.',
+            });
+        }
+        await Task.updateOne({estado:3})
         return res.status(201).json({
-            message: 'La tarea fue elimada correctamente.',
-        })
+            message: 'La tarea fue completada con éxito.',
+        });
     } catch (error) {
         return res.status(500).json({
-            message: "Hubo un error con eliminar la tarea.",
+            message: "Error interno del servidor y no pudo completar la tarea",
             error: error.message
         })
     }
-}
+};
+
 //TODO:Elimino una tarea
 
 CtrlTask.deleteTask = async (req, res) => {
