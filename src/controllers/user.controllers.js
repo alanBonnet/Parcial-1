@@ -23,7 +23,7 @@ CtrlUser.getUsers = async (req, res) => {
 // Controlador de GetUser por ID
 CtrlUser.getUserID = async (req, res) => {
     try {
-        const user = await USER.findOne({$and:[{"_id":req.params.idUser},{isActive:true}]});
+        const user = await USER.findOne({$and:[{"_id":req.user._id},{isActive:true}]});
         if(!user){
             return res.status(404).json({
                 message:"No se encuentra el usuario"
