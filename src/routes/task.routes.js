@@ -10,7 +10,7 @@ const {
     completeTask,
     deleteTask
 } = require('../controllers/task.controllers');
-const { isNotAuthorized } = require('../helpers/validaciones');
+const { isAuthorized } = require('../middlewares/validaciones');
 
 //TODO:Ruta getTasks
 router.get('/task',getTasks);
@@ -19,7 +19,7 @@ router.get('/task',getTasks);
 router.get('/task/user/',[validateJWT],getTask_idUser);
 
 //TODO:Ruta postTask
-router.post('/task',[validateJWT,isNotAuthorized],postTask);
+router.post('/task',[validateJWT,isAuthorized],postTask);
 
 //TODO:Ruta putTask
 router.put('/task/:idTask',[validateJWT],putTask);

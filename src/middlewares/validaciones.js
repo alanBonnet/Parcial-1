@@ -1,6 +1,6 @@
 const validations = {}
 
-validations.isNotAuthorized = (req, res, next) => {
+validations.isAuthorized = (req, res, next) => {
     if(!(req.params.idUser == req.user._id || req.user.role === 'user_admin')){
         return res.status(401).json({
             message: "No está autorizado para esta petición"

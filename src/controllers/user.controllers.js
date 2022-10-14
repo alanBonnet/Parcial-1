@@ -1,7 +1,6 @@
 //TODO:Importado de dependencias
 const USER = require('../models/USER');
 const TASK = require('../models/TASK');
-const {ExistObject, isNotAuthorized, menorExtension} = require('../helpers/validaciones');
 const bcrypt = require('bcrypt');
 //TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
