@@ -1,5 +1,7 @@
 //TODO:Importado de dependencias
 const USER = require('../models/USER');
+const TASK = require('../models/TASK');
+const {ExistObject, isNotAuthorized, menorExtension} = require('../helpers/validaciones');
 const bcrypt = require('bcrypt');
 //TODO: Inicializado de Controllador.objtect
 const CtrlUser = {}
@@ -22,21 +24,11 @@ CtrlUser.getUsers = async (req, res) => {
 //TODO: Controlador de GetUser por ID
 CtrlUser.getUserID = async (req, res) => {
     try {
-        const idUser = req.params.idUser;
-        const user = await USER.findOne({$and:[{"_id":idUser},{isActive:true}]});
+        const user = await USER.findOne({$and:[{"_id":req.params.idUser},{isActive:true}]});
         if(!user){
-            return res.status(404).json(
-                {
-                    message:"No se encuentra el usuario"
-                }
-            )
-        }
-        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
-            return res.status(401).json(
-                {
-                    message: `No está autorizado para esta petición.`
-                }
-            )
+            return res.status(404).json({
+                message:"No se encuentra el usuario"
+            })
         }
         return res.json(
             {
@@ -52,7 +44,7 @@ CtrlUser.getUserID = async (req, res) => {
 CtrlUser.postUser = async (req, res) => {
     try {
         const {username, password,email} = req.body;
-        if(username.length < 8 && password.length < 8){
+        if(username.length < 8 || password.length < 8){
             return res.status(404).json({
                 message:"La extensión mínima del nombre de usuario o contraseña es menor a 8"
             })
@@ -97,13 +89,6 @@ CtrlUser.putUser = async (req, res) => {
                 message: `El usuario no fue encontrado`
             })
         }
-        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
-            return res.status(401).json(
-                {
-                    message: `No está autorizado para esta petición.`
-                }
-            )
-        }
         const newPassword = bcrypt.hashSync(password,10)
         await User.updateOne({password:newPassword , email});
         return res.status(201).json({
@@ -125,16 +110,31 @@ CtrlUser.deleteUser = async (req, res) => {
                 message: `El usuario ya no existe`
             })
         }
-        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
-            return res.status(401).json(
-                {
-                    message: `No está autorizado para esta petición.`
-                }
-            )
-        }
         await user.updateOne({isActive: false})
         return res.status(201).json({
             message: `Usuario eliminado correctamente.`
+        })
+    } catch (error) {
+        return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
+    }
+}
+//TODO: export del Controlador
+
+CtrlUser.deleteUserAllTasks = async (req, res) => {
+    try {
+        const idUser = req.params.idUser;
+        const user = await USER.findOne({$and:[{_id: idUser},{isActive: true}]});
+        if(!user){
+            return res.status(404).json({
+                message: `El usuario ya no existe`
+            })
+        }
+        //TODO: Busco y actualizo el estado de las tareas que es propietarios de las tareas
+        await TASK.updateMany({$and:[{isActive: true},{idUser}]}, {isActive: false})
+        //TODO: Busco y actualizo el estado del usuario a eliminar
+        await user.updateOne({isActive: false})
+        return res.status(201).json({
+            message: `Usuario eliminado correctamente.`,
         })
     } catch (error) {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})

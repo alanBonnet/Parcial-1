@@ -128,6 +128,48 @@ CtrlTask.putTask = async (req, res) => {
         })
     }
 };
+//TODO:Modificamos una tarea
+
+CtrlTask.completeTask = async (req, res) => {
+    try {
+        const idTask = req.params.idTask;
+        const userID = req.user._id;
+
+        if(!idTask){
+            return res.status(400).json({
+                message:"No viene la ID de la tarea"
+            })
+        }
+        const Task = await TaskModel.findById(idTask);
+        if(!Task || !Task.isActive){
+            return res.status(404).json({
+                message: 'No se encuentra la tarea',
+            })
+        }
+        const userIdString = userID.toString();
+        const tareaIdString = Task.idUser.toString();
+
+        if((!(userIdString === tareaIdString)|| req.user.role === 'user_admin')){
+            return res.status(401).json({
+                message: 'No tiene permisos para modificar la tarea',
+            })
+        }
+        if(Task.estado === 3){
+            return res.status(400).json({
+                message: 'La tarea ya fue completada con anterioridad.',
+            });
+        }
+        await Task.updateOne({estado:3})
+        return res.status(201).json({
+            message: 'La tarea fue completada con éxito.',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error interno del servidor y no pudo completar la tarea",
+            error: error.message
+        })
+    }
+};
 
 //TODO:Elimino una tarea
 
