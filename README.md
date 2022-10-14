@@ -30,7 +30,7 @@ npm  start
 
 # Usos
 * ## Lo ideal para comenzar es registrarte como usuario: 
-
+---
 > ## HTTP: **POST** :http://localhost:3000/user 
 >    * **=> requiere del siguiente body:**
 
@@ -41,8 +41,9 @@ npm  start
 		 "email":"UnEmailVálido"
 	 }
 ```
+---
 * ## El siguiente paso sería iniciar sesión para acceder a las funciones:
-
+---
 > 	* ## HTTP: **POST**: [http://localhost:3000/login](http://localhost:3000/login)  
 >     * **=> requiere del siguiente body:**
 
@@ -76,8 +77,9 @@ npm  start
 		 "password":"UsuarioPrueba2"
 	 }
 ```
+---
 * # Una vez reciba el Token, cópielo y uselo como header Authorization en su cliente y así acceder a las funciones:
-
+---
 > ## HTTP: **PUT**: [http://localhost:3000/user](http://localhost:3000/user) 
 >   * **=> requiere del siguiente body:**
 >   * Solo se puede cambiar el password y el email al mismo tiempo;
@@ -88,18 +90,18 @@ npm  start
 		 "email":"UnEmailVálido"
 	 }
 ```
-
+---
 >  ## HTTP: **GET**: [http://localhost:3000/user](http://localhost:3000/user) 		
 >    * Sirve para ver la información de tu cuenta. 	
-
+---
 >  ## HTTP: **DELETE**: [http://localhost:3000/user](http://localhost:3000/user) 	
 >    * En caso de que quieras eliminar la cuenta.
-
+---
 * # Funciones de Tareas con el Token:
-
+---
 >  ## HTTP: **GET** *(SOLO ROL DE ADMIN)*: [http://localhost:3000/task](http://localhost:3000/task)  
 >   *  Mostraría todas las tareas existentes en la Base de Datos:
-
+---
 > ## HTTP: **GET** [http://localhost:3000/task/:idTarea](http://localhost:3000/task/:idTarea)
 >   *  Para tener en cuenta; 
 > Para obtener el :idTarea preferiblemente que haga un GET de las tareas
@@ -126,9 +128,10 @@ npm  start
 		"updatedAt":  "2022-10-14T06:19:52.394Z"
 	}
 ```
+---
 >  ## HTTP: **GET**: [http://localhost:3000/task/user](http://localhost:3000/task/user) 	
 >    *  **Muestra todas las tareas del usuario que inició sesión y usa su token para esta petición**. 	
-
+---
 >  ## HTTP:  **POST**: [http://localhost:3000/task](http://localhost:3000/task)  
 >    * **=> requiere el siguiente Body:** 		
 >        * El formato de Fecha es ( *aaaa-mm-dd* **T** *hh:mm:ss***Z** ) por defecto toma el tiempo que es creada la tarea. 		
@@ -151,7 +154,7 @@ npm  start
 	 }
 ```
 	
-
+---
 >  ## HTTP: **PUT**: [http://localhost:3000/task/:idTarea](http://localhost:3000/task/) 
 > **=> requiere el siguiente Body:** 	
 >   * Para tener en cuenta; 
@@ -190,15 +193,16 @@ npm  start
 		"estado":3
 	 }
 ```
+---
 > ## HTTP: **PUT**: [http://localhost:3000/task/:idTarea/complete](http://localhost:3000/task/:idTarea/complete) 
 > #### Para completar una tarea
 >   * #### :idTarea hace referencia al "_id" de la tarea a completar
 >   * Por ejemplo:
 > * #### HTTP: **PUT**: [http://localhost:3000/task/6348ff8873c8a926fd3dc92c/complete](http://localhost:3000/task/6348ff8873c8a926fd3dc92c/complete) 
-
+---
 > ## HTTP: **DELETE**: [http://localhost:3000/task/:idTarea](http://localhost:3000/task/:idTarea)
 > #### Para eliminar una tarea
 >   * #### :idTarea hace referencia al "_id" de la tarea a completar
 >   * Por ejemplo:
 > * ### HTTP: **DELETE**: [http://localhost:3000/task/6348ff8873c8a926fd3dc92c](http://localhost:3000/task/6348ff8873c8a926fd3dc92c)
-
+---
