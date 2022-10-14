@@ -19,7 +19,7 @@ router.get('/task',getTasks);
 router.get('/task/user/',[validateJWT],getTask_idUser);
 
 //TODO:Ruta postTask
-router.post('/task',[validateJWT],postTask);
+router.post('/task',[validateJWT,isNotAuthorized],postTask);
 
 //TODO:Ruta putTask
 router.put('/task/:idTask',[validateJWT],putTask);

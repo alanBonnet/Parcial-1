@@ -60,13 +60,6 @@ CtrlTask.postTask = async (req, res) => {
                 message: 'No existe el usuario para asignar la tarea'
             })
         };//TODO:Devuelve en caso de que no exista usuario que se quiera asignar a él
-        if(!( (idUser == req.user._id) || req.user.role === 'user_admin') ){
-            return res.status(401).json(
-                {
-                    message: `No está autorizado para esta petición.`
-                }
-            )
-        }
         const nuevaTarea = new TaskModel({
             title,
             description,
