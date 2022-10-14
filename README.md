@@ -91,6 +91,10 @@ npm  start
 	 }
 ```
 ---
+>  ## HTTP: **GET** *(SOLO ROL DE ADMIN)*: [http://localhost:3000/users](http://localhost:3000/user) 		
+>    * Sirve para ver la información de todas las cuentas. 	
+---
+---
 >  ## HTTP: **GET**: [http://localhost:3000/user](http://localhost:3000/user) 		
 >    * Sirve para ver la información de tu cuenta. 	
 ---
