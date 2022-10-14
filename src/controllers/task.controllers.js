@@ -85,10 +85,9 @@ CtrlTask.postTask = async (req, res) => {
 
 CtrlTask.putTask = async (req, res) => {
     try {
-        const idTask = req.params.idTask;
-        const userID = req.user._id;
+        const Task = req.task;
         const {title, description, fecha, estado} = req.body;
-        if(!idTask || !title || !description){
+        if(!req.params.idTask || !title || !description){
             return res.status(400).json({
                 message:"No viene la ID o información requerida",
                 opcionesObligatorias:["title", "description"],
@@ -96,24 +95,10 @@ CtrlTask.putTask = async (req, res) => {
                 InformacionAdicional:"Recuerde que el id de la tarea tiene que estar despues de /task/"
             })
         }
-        const Task = await TaskModel.findById(idTask);
-        if(!Task || !Task.isActive){
-            return res.status(404).json({
-                message: 'No se encuentra la tarea',
-            })
-        }
-        const userIdString = userID.toString();
-        const tareaIdString = Task.idUser.toString();
-
-        if((userIdString === tareaIdString)|| req.user.role === 'user_admin'){
-            await Task.updateOne({title,description,fecha,estado})
-            return res.status(201).json({
-                message: 'La tarea fue actualizada exitosamente.',
-            });
-        }
-        return res.status(401).json({
-            message: 'No tiene permisos para editar la tarea',
-        })
+        await Task.updateOne({title,description,fecha,estado})
+        return res.status(201).json({
+            message: 'La tarea fue actualizada exitosamente.',
+        });
     } catch (error) {
         return res.status(500).json({
             message: "Error interno del servidor y no pudo actualizar la tarea",
@@ -125,28 +110,7 @@ CtrlTask.putTask = async (req, res) => {
 
 CtrlTask.completeTask = async (req, res) => {
     try {
-        const idTask = req.params.idTask;
-        const userID = req.user._id;
-
-        if(!idTask){
-            return res.status(400).json({
-                message:"No viene la ID de la tarea"
-            })
-        }
-        const Task = await TaskModel.findById(idTask);
-        if(!Task || !Task.isActive){
-            return res.status(404).json({
-                message: 'No se encuentra la tarea',
-            })
-        }
-        const userIdString = userID.toString();
-        const tareaIdString = Task.idUser.toString();
-
-        if((!(userIdString === tareaIdString)|| req.user.role === 'user_admin')){
-            return res.status(401).json({
-                message: 'No tiene permisos para modificar la tarea',
-            })
-        }
+        const Task = req.task
         if(Task.estado === 3){
             return res.status(400).json({
                 message: 'La tarea ya fue completada con anterioridad.',
@@ -168,23 +132,7 @@ CtrlTask.completeTask = async (req, res) => {
 
 CtrlTask.deleteTask = async (req, res) => {
     try {
-        const idTask = req.params.idTask;
-        const userID = req.user._id;
-
-        const Task = await TaskModel.findOne({$and:[{_id:idTask},{isActive:true}]})
-        if(!Task || !Task.isActive){
-            return res.status(404).json({
-                message: 'No existe la tarea'
-            });
-        }//Verifico si la tarea existe o está activa
-        const userIDString = userID.toString() //recibo el userID que me pasa el validateJWT y lo convierto a STRING
-        const tareaIDString = Task.idUser.toString()//recibo la propiedad idUser de la Task y lo convierto a STRING para luego comparar
-
-        if(!((userIDString === tareaIDString)|| req.user.role === 'user_admin')) {
-            return res.status(401).json({
-                message: 'No está autorizado para eliminar esta tarea.'
-            })
-        }//Verifico si está autorizado el usuario por role o si es propietario de la tarea
+        const Task = req.task;
         await Task.updateOne({isActive:false});
         return res.status(201).json({
             message: 'La tarea fue elimada correctamente.',
