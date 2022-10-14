@@ -1,12 +1,11 @@
-//TODO:Importado de dependencias
+//Importado de dependencias
 const USER = require('../models/USER');
 const TASK = require('../models/TASK');
-const {ExistObject, isNotAuthorized, menorExtension} = require('../helpers/validaciones');
 const bcrypt = require('bcrypt');
-//TODO: Inicializado de Controllador.objtect
+// Inicializado de Controllador.objtect
 const CtrlUser = {}
 
-//TODO: Controlador de GetUsers
+// Controlador de GetUsers
 CtrlUser.getUsers = async (req, res) => {
     try {
         const USERS = await USER.find({isActive: true});
@@ -21,7 +20,7 @@ CtrlUser.getUsers = async (req, res) => {
     }
 
 }
-//TODO: Controlador de GetUser por ID
+// Controlador de GetUser por ID
 CtrlUser.getUserID = async (req, res) => {
     try {
         const user = await USER.findOne({$and:[{"_id":req.params.idUser},{isActive:true}]});
@@ -40,7 +39,7 @@ CtrlUser.getUserID = async (req, res) => {
         return res.status(500).json({message: `Error interno del Servidor: ${error.message}`})
     }
 }
-//TODO: Controlador de PostUser
+// Controlador de PostUser
 CtrlUser.postUser = async (req, res) => {
     try {
         const {username, password,email} = req.body;
@@ -50,7 +49,7 @@ CtrlUser.postUser = async (req, res) => {
             })
         }
         // Encriptando la contraseña de usuario
-        const newPassword = bcrypt.hashSync(password,10);//TODO:Mecanismo de encriptado de la contraseña
+        const newPassword = bcrypt.hashSync(password,10);//Mecanismo de encriptado de la contraseña
 
         const newUser = new USER({
             username,
@@ -67,7 +66,7 @@ CtrlUser.postUser = async (req, res) => {
         })
     }
 }
-//TODO: Controlador de PutUser
+// Controlador de PutUser
 CtrlUser.putUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -100,7 +99,7 @@ CtrlUser.putUser = async (req, res) => {
         })
     }
 }
-//TODO: Controlador de DeleteUser
+// Controlador de DeleteUser
 CtrlUser.deleteUser = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -110,28 +109,9 @@ CtrlUser.deleteUser = async (req, res) => {
                 message: `El usuario ya no existe`
             })
         }
-        await user.updateOne({isActive: false})
-        return res.status(201).json({
-            message: `Usuario eliminado correctamente.`
-        })
-    } catch (error) {
-        return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
-    }
-}
-//TODO: export del Controlador
-
-CtrlUser.deleteUserAllTasks = async (req, res) => {
-    try {
-        const idUser = req.params.idUser;
-        const user = await USER.findOne({$and:[{_id: idUser},{isActive: true}]});
-        if(!user){
-            return res.status(404).json({
-                message: `El usuario ya no existe`
-            })
-        }
-        //TODO: Busco y actualizo el estado de las tareas que es propietarios de las tareas
+        // Busco y actualizo el estado de las tareas que es propietarios de las tareas
         await TASK.updateMany({$and:[{isActive: true},{idUser}]}, {isActive: false})
-        //TODO: Busco y actualizo el estado del usuario a eliminar
+        // Busco y actualizo el estado del usuario a eliminar
         await user.updateOne({isActive: false})
         return res.status(201).json({
             message: `Usuario eliminado correctamente.`,
@@ -140,5 +120,6 @@ CtrlUser.deleteUserAllTasks = async (req, res) => {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
     }
 }
-//TODO: export del Controlador
+
+// export del Controlador
 module.exports = CtrlUser;
