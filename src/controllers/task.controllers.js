@@ -1,8 +1,8 @@
-//TODO:Importado del modelo de tareas y Users
+//Importado del modelo de tareas y Users
 const TaskModel = require('../models/TASK');
 const UserModel = require('../models/USER');
 const CtrlTask = {};
-//TODO: Controlador que Trae Todas las tareas
+// Controlador que Trae Todas las tareas
 CtrlTask.getTasks = async (req, res) => {
     try {
         const Tasks = await TaskModel.find({isActive: true})
@@ -19,7 +19,7 @@ CtrlTask.getTasks = async (req, res) => {
         )
     }
 };
-//TODO:Obtenemos las tareas de un usuario
+//Obtenemos las tareas de un usuario
 CtrlTask.getTask_idUser = async (req, res) => {
     try {
         const idUser = req.user._id;
@@ -41,7 +41,7 @@ CtrlTask.getTask_idUser = async (req, res) => {
     }
 };
 
-//TODO:Creamos Tarea
+//Creamos Tarea
 CtrlTask.postTask = async (req, res) => {
     try {
         const idUser = req.user._id
@@ -53,13 +53,13 @@ CtrlTask.postTask = async (req, res) => {
                 opcionesAdicionales:["fecha","estado"]
             });
         }
-        //TODO:Comprueba si existe el user para crear la tarea
+        //Comprueba si existe el user para crear la tarea
         const User = await UserModel.findOne({_id:idUser})
         if(!User){
             return res.status(404).json({
                 message: 'No existe el usuario para asignar la tarea'
             })
-        };//TODO:Devuelve en caso de que no exista usuario que se quiera asignar a él
+        };//Devuelve en caso de que no exista usuario que se quiera asignar a él
         const nuevaTarea = new TaskModel({
             title,
             description,
@@ -81,7 +81,7 @@ CtrlTask.postTask = async (req, res) => {
     }
 };
 
-//TODO:Modificamos una tarea
+//Modificamos una tarea
 
 CtrlTask.putTask = async (req, res) => {
     try {
@@ -121,7 +121,7 @@ CtrlTask.putTask = async (req, res) => {
         })
     }
 };
-//TODO:Modificamos una tarea
+//Modificamos una tarea
 
 CtrlTask.completeTask = async (req, res) => {
     try {
@@ -164,7 +164,7 @@ CtrlTask.completeTask = async (req, res) => {
     }
 };
 
-//TODO:Elimino una tarea
+//Elimino una tarea
 
 CtrlTask.deleteTask = async (req, res) => {
     try {
@@ -176,7 +176,7 @@ CtrlTask.deleteTask = async (req, res) => {
             return res.status(404).json({
                 message: 'No existe la tarea'
             });
-        }//TODO:Verifico si la tarea existe o está activa
+        }//Verifico si la tarea existe o está activa
         const userIDString = userID.toString() //recibo el userID que me pasa el validateJWT y lo convierto a STRING
         const tareaIDString = Task.idUser.toString()//recibo la propiedad idUser de la Task y lo convierto a STRING para luego comparar
 
@@ -184,7 +184,7 @@ CtrlTask.deleteTask = async (req, res) => {
             return res.status(401).json({
                 message: 'No está autorizado para eliminar esta tarea.'
             })
-        }//TODO:Verifico si está autorizado el usuario por role o si es propietario de la tarea
+        }//Verifico si está autorizado el usuario por role o si es propietario de la tarea
         await Task.updateOne({isActive:false});
         return res.status(201).json({
             message: 'La tarea fue elimada correctamente.',

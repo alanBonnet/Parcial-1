@@ -1,7 +1,7 @@
-//TODO:Importado de dependencia Router y el Middleware "ValidateJWT"
+//Importado de dependencia Router y el Middleware "ValidateJWT"
 const router = require('express').Router();
 const validateJWT = require('../middlewares/validator-jwt');
-//TODO:Importación desestructurada del controlador de tareas
+//Importación desestructurada del controlador de tareas
 const {
     getTasks,
     getTask_idUser,
@@ -12,22 +12,22 @@ const {
 } = require('../controllers/task.controllers');
 const { isAuthorized } = require('../middlewares/validaciones');
 
-//TODO:Ruta getTasks
+//Ruta getTasks
 router.get('/task',getTasks);
 
-//TODO:Ruta getTask por IdUser
+//Ruta getTask por IdUser
 router.get('/task/user/',[validateJWT],getTask_idUser);
 
-//TODO:Ruta postTask
+//Ruta postTask
 router.post('/task',[validateJWT,isAuthorized],postTask);
 
-//TODO:Ruta putTask
+//Ruta putTask
 router.put('/task/:idTask',[validateJWT],putTask);
 
-//TODO:Ruta completeTask
+//Ruta completeTask
 router.put('/task/:idTask/complete',[validateJWT],completeTask);
 
-//TODO:Ruta deleteTask
+//Ruta deleteTask
 router.delete('/task/:idTask',[validateJWT],deleteTask);
 
 module.exports = router;

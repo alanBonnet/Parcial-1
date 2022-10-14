@@ -1,27 +1,27 @@
 console.clear();
-//TODO: Importamos las libreria 
+// Importamos las libreria 
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config()
-//TODO: Conexión a la base de datos
+// Conexión a la base de datos
 const connectDB = require('./connection');
 connectDB()
 
-//TODO: Inicializamos express
+// Inicializamos express
 const app = express();
 //configuraciones
 const port = process.env.PORT;
 
-//TODO: Middlewares
+// Middlewares
 app.use(cors())
 app.use(morgan('combined'));
 app.use(express.json());
 
-//TODO: Rutas
+// Rutas
 app.use(require('./routes/user.routes'))// rutas del usuario
 app.use(require('./routes/auth.routes'))// rutas de login 
 app.use(require('./routes/task.routes'))// rutas del tareas
 
-//TODO: Inicio de servidor
+// Inicio de servidor
 app.listen(port, console.log(`Servidor inicializado en http://localhost:${port}`));

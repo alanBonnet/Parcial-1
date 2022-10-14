@@ -1,9 +1,9 @@
-//TODO:Importado del modelo de Usuario
+//Importado del modelo de Usuario
 const UserModel = require('../models/USER');
-//TODO:Importado del JWT para verificarlos
+//Importado del JWT para verificarlos
 const jwt = require('jsonwebtoken');
 
-//TODO:Fn para validarJWT
+//Fn para validarJWT
 const validarJWT = async (req, res, next) => {
     let token = req.headers.authorization;
 
@@ -12,7 +12,7 @@ const validarJWT = async (req, res, next) => {
         return res.status(401).json({
             msg: 'Error de autenticación - no hay token en la petición'
         })
-    };//TODO:Devuelve en caso de no recibir el token
+    };//Devuelve en caso de no recibir el token
 
     try {
         /* Is obtained idUser, if was validated */
@@ -24,25 +24,25 @@ const validarJWT = async (req, res, next) => {
             return res.status(401).json({
                 error: 'Token no válido - usuario no existe en la DB'
             })
-        };//TODO:Devuelve en caso de que el usuario no existe en la DB
+        };//Devuelve en caso de que el usuario no existe en la DB
         /* Verify if the User is Active */
         if (!Usuario.isActive) {
             return res.status(401).json({
                 message: 'Token no válido - usuario no está activo'
             })
-        };//TODO:Devuelve en caso de que el usuario con estado false
+        };//Devuelve en caso de que el usuario con estado false
         /* is added the info by user to request what for can be utilized on rest of middlewares*/
         req.user = Usuario;
 
         /* to be continue of rest the request */
-        next();//TODO:En caso exitoso sigue con la ejecución
+        next();//En caso exitoso sigue con la ejecución
     } catch (error) {
         console.log(error.message);
         res.status(401).json(
             {
                 msg: ' Error de autenticación - Token no válido'
             }
-        )//TODO:Token no válido
+        )//Token no válido
     }
 }
 

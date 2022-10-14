@@ -5,7 +5,7 @@ validations.isAuthorized = (req, res, next) => {
         return res.status(401).json({
             message: "No está autorizado para esta petición"
         })
-    }//TODO:Verifico si está autorizado el usuario por role o si es propietario de la tarea
+    }//Verifico si está autorizado el usuario por role o si es propietario de la tarea
     next()
 }
 validations.isEmail = (req, res, next) => {
