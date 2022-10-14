@@ -109,25 +109,6 @@ CtrlUser.deleteUser = async (req, res) => {
                 message: `El usuario ya no existe`
             })
         }
-        await user.updateOne({isActive: false})
-        return res.status(201).json({
-            message: `Usuario eliminado correctamente.`
-        })
-    } catch (error) {
-        return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
-    }
-}
-// export del Controlador
-
-CtrlUser.deleteUserAllTasks = async (req, res) => {
-    try {
-        const idUser = req.params.idUser;
-        const user = await USER.findOne({$and:[{_id: idUser},{isActive: true}]});
-        if(!user){
-            return res.status(404).json({
-                message: `El usuario ya no existe`
-            })
-        }
         // Busco y actualizo el estado de las tareas que es propietarios de las tareas
         await TASK.updateMany({$and:[{isActive: true},{idUser}]}, {isActive: false})
         // Busco y actualizo el estado del usuario a eliminar
@@ -139,5 +120,6 @@ CtrlUser.deleteUserAllTasks = async (req, res) => {
         return res.status(500).json({message:`Error interno del servidor: ${error.message}`})
     }
 }
+
 // export del Controlador
 module.exports = CtrlUser;

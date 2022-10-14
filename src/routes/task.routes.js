@@ -10,7 +10,7 @@ const {
     completeTask,
     deleteTask
 } = require('../controllers/task.controllers');
-const { isAuthorized, isAuthorized_Task } = require('../middlewares/validaciones');
+const { isAuthorized_Task } = require('../middlewares/validaciones');
 
 //Ruta getTasks
 router.get('/task',getTasks);
