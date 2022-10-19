@@ -27,7 +27,8 @@ npm  start
 
 ```
 [Link Github Para Descargar la App](https://github.com/alanBonnet/Parcial-1/releases)
-
+* Ahora al entrar a la pagina para descargar la app, tambien puede descargar el postman-helper:
+    * Así facilita el proceso de testeo de la app.
 # Usos
 * ## Lo ideal para comenzar es registrarte como usuario: 
 ---
