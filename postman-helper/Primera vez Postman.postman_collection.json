@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "dd68cf3e-64af-4d69-a855-70fa63691628",
+		"name": "Primera vez Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19908660"
+	},
+	"item": [
+		{
+			"name": "User Requests",
+			"item": [
+				{
+					"name": "get Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRjYzFlNDQ1NzhiYTQ5Njg2OWIiLCJyb2xlIjoidXNlcl9hZG1pbiIsImlhdCI6MTY2NTc1Nzg3MSwiZXhwIjoxNjY1Nzc1ODcxfQ.uaNA1_x7Ds4AjPuNIlLDxg_SpDUs0EcSrQsnSqCB7ZQ",
+								"description": "Admin",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTc0OTMsImV4cCI6MTY2NTc3NTQ5M30.G86bjqnoe1yN2sTGbO0DBGYDJYM28W7mYirj_ugjGlk",
+								"description": "UserPrueba1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get User1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRjYzFlNDQ1NzhiYTQ5Njg2OWIiLCJyb2xlIjoidXNlcl9hZG1pbiIsImlhdCI6MTY2NTc1Nzg3MSwiZXhwIjoxNjY1Nzc1ODcxfQ.uaNA1_x7Ds4AjPuNIlLDxg_SpDUs0EcSrQsnSqCB7ZQ",
+								"description": "ADMIN",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTc0OTMsImV4cCI6MTY2NTc3NTQ5M30.G86bjqnoe1yN2sTGbO0DBGYDJYM28W7mYirj_ugjGlk",
+								"description": "userPrueba1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "a",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"AlanBonnet1243\",\r\n    \"email\":\"alan.and.br\",\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU0NjI2OTMsImV4cCI6MTY2NTQ4MDY5M30.Dm88i2dkV2tpcXkY6RGKdwGjlqVrWodXe-0RfMzXUxs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"UsuarioPruebaMod\",\r\n    \"email\":\"UsuarioPruebaMod@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/user/6344ddee1e44578ba496869d",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"6344ddee1e44578ba496869d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Transfer-Encoding",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU0NjI2OTMsImV4cCI6MTY2NTQ4MDY5M30.Dm88i2dkV2tpcXkY6RGKdwGjlqVrWodXe-0RfMzXUxs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/6344ddcc1e44578ba496869b",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"6344ddcc1e44578ba496869b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task Requests",
+			"item": [
+				{
+					"name": "get Tasks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTc0OTMsImV4cCI6MTY2NTc3NTQ5M30.G86bjqnoe1yN2sTGbO0DBGYDJYM28W7mYirj_ugjGlk",
+								"description": "UsuarioPrueba",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRjYzFlNDQ1NzhiYTQ5Njg2OWIiLCJyb2xlIjoidXNlcl9hZG1pbiIsImlhdCI6MTY2NTc1Nzg3MSwiZXhwIjoxNjY1Nzc1ODcxfQ.uaNA1_x7Ds4AjPuNIlLDxg_SpDUs0EcSrQsnSqCB7ZQ",
+								"description": "Admin",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/task",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Task by IdUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRlZTFlNDQ1NzhiYTQ5Njg2OWQiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjYwMjY3NDYsImV4cCI6MTY2NjA0NDc0Nn0.n0iTF10ZfwF-d2Ze0XGVCKBi2IyVMW24rhowUE2CoVg",
+								"description": "UserPrueba ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/task/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRlZTFlNDQ1NzhiYTQ5Njg2OWQiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTk2MTgsImV4cCI6MTY2NTc3NzYxOH0.JYb7FnDMd_7EEjmam0TnVrjzdt5abyapGf6uALdbhdc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\":\"Tarea 12\",\r\n  \"description\":\"Descripción Tarea 20\",\r\n  \"fecha\":\"2022-10-14T12:37Z\",\r\n  \"estado\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/task",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put Task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZjE4N2RlNDk3ZDNhYzYyYWRmNzYiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTc0OTMsImV4cCI6MTY2NTc3NTQ5M30.G86bjqnoe1yN2sTGbO0DBGYDJYM28W7mYirj_ugjGlk",
+								"description": "UserPrueba1",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRlZTFlNDQ1NzhiYTQ5Njg2OWQiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjYwMjY3NDYsImV4cCI6MTY2NjA0NDc0Nn0.n0iTF10ZfwF-d2Ze0XGVCKBi2IyVMW24rhowUE2CoVg",
+								"description": "UserPrueba",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Terminar\",\r\n    \"description\": \"Para aprender bien\",\r\n    \"estado\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/task/6344f3ef3acb853f6a5e8355",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								"6344f3ef3acb853f6a5e8355"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete Task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRlZTFlNDQ1NzhiYTQ5Njg2OWQiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU3NTk2MTgsImV4cCI6MTY2NTc3NzYxOH0.JYb7FnDMd_7EEjmam0TnVrjzdt5abyapGf6uALdbhdc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Terminar el CRUD de TASK y USERS\",\r\n    \"description\": \"Para aprender bien\",\r\n    \"estado\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/task/63498251e6dee7b883687b5c/complete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								"63498251e6dee7b883687b5c",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Task",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzQ0ZGRjYzFlNDQ1NzhiYTQ5Njg2OWIiLCJyb2xlIjoidXNlcl9ub3JtYWwiLCJpYXQiOjE2NjU0NjAzMjgsImV4cCI6MTY2NTQ3ODMyOH0.d-GEx4pDwgl4-U6NySOZnMZOlnhzYnucIu8uCVDxMXE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/task/6344f4283acb853f6a5e8359",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"task",
+								"6344f4283acb853f6a5e8359"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Iniciar Sesión",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"AlanBonnetConJWT\",\r\n    \"password\":\"123456789SHA256\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Sesión Admin Server_Parcial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Admin\",\r\n    \"password\":\"Admin321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Sesión UserPrueba Server_Parcial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"UsuarioPrueba\",\r\n    \"password\":\"UsuarioPruebaMod\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Sesión UserPrueba1 Server_Parcial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"UsuarioPrueba1\",\r\n    \"password\":\"UsuarioPrueba2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
