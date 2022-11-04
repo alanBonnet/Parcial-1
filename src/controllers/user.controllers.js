@@ -42,6 +42,8 @@ CtrlUser.getUserID = async (req, res) => {
 // Controlador de PostUser
 CtrlUser.postUser = async (req, res) => {
     try {
+        
+
         const {username, password,email} = req.body;
         if(username.length < 8 || password.length < 8){
             return res.status(404).json({

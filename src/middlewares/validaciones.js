@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+const USER = require('../models/USER')
 const TaskModel = require('../models/TASK');
 const validations = {}
 
@@ -43,4 +45,33 @@ validations.isAuthorized_Task = async (req, res, next) => {
     req.task = Task;
     next();
 }
+
+validations.validarCampos = (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+    next();
+}
+validations.existUser = async (value) => {
+
+    const user = await USER.findOne({username: value});
+    if(user){
+        throw new Error('El Usuario ya existe.')
+    }
+    return true;
+
+}
+validations.existEmail = async (value) => {
+
+    const user = await USER.findOne({email: value});
+    if(user){
+        throw new Error('El Email ya existe.')
+    }
+    return true;
+
+}
+
 module.exports = validations;

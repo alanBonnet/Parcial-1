@@ -1,8 +1,10 @@
 //Importado de las dependencias Router, Middlewares: isAdmin y validateJWT
 const router = require('express').Router();
 const isAdmin = require('../middlewares/is-admin');
+const USER = require('../models/USER')
 const validateJWT = require('../middlewares/validator-jwt');
-const {isAuthorized,isEmail} = require('../middlewares/validaciones')
+const {isAuthorized,isEmail, validarCampos, existUser, existEmail} = require('../middlewares/validaciones')
+const {check} = require('express-validator')
 //Importado Desestructurado del controlador de User
 const {
     getUsers,
@@ -19,7 +21,30 @@ router.get('/users',[validateJWT,isAdmin],getUsers);//Para obtener todos los usu
 router.get('/user',[validateJWT],getUserID);//Para obtener un usuario por ID
 
 //Ruta PostUser
-router.post('/user',[isEmail],postUser);//Creo un usuario
+router.post('/user',[
+                    check('username')
+                    .custom(existUser)
+                    .isLength({min:8}).withMessage('Extensión incorrecta')
+                    .not()
+                    .isEmpty().withMessage('Vuelva a intentarlo.')
+                    .isString().withMessage('Intente nuevamente.'),
+
+                    check('password')
+                    .isLength({min:8}).withMessage('Extensión incorrecta')
+                    .not()
+                    .isEmpty().withMessage('Vuelva a intentarlo.')
+                    .isString().withMessage('Intente nuevamente.'),
+
+                    check('email')
+                    .isEmail().withMessage('Email inválido, intente nuevamente.')
+                    .custom(existEmail)
+                    .not()
+                    .isEmpty().withMessage('Vuelva a intentarlo.')
+                    .isString().withMessage('Intente nuevamente.'),
+
+
+                    validarCampos
+],postUser);//Creo un usuario
 
 //Ruta PutUser
 router.put('/user/:idUser',[validateJWT, isAuthorized,isEmail],putUser);//Modifico un usuario
